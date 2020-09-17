@@ -150,10 +150,11 @@ class RouterController:
                 func = getattr(handler, method)
                 if arg and len(signature(func).parameters) == 3:
                     ret = func(req, resp, arg)
-                    return iter([ret])
-                ret = func(req, resp)
+                else:
+                    ret = func(req, resp)
             else:
                 ret = self.routes.default(req, resp)
+            resp.start()
             return iter([ret])
         except Exception as ex:
             if self.debug:
@@ -163,6 +164,7 @@ class RouterController:
                 return iter([tb])
             else:
                 ret = self.routes.default(req, resp)
+                resp.start()
                 return iter([ret])
 
     def route(self, method=[], route=None):
