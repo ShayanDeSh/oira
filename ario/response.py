@@ -73,13 +73,11 @@ class Response(Headers):
     def perm_redirect(self, location):
         self.location = location
         self.status = moved_permanently()
-        self.start()
 
 
     def temp_redirect(self, location):
         self.location = location
         self.status = moved_temporarily()
-        self.start()
 
 
     def cookie(self, name, value, options=None):
