@@ -159,6 +159,7 @@ class RouterController:
             resp.start()
             return iter([ret])
         except BadRequestError as ex:
+            resp.content_type = 'text/html'
             if BadRequestError.handler is not None:
                 ret = BadRequestError.handler()
                 resp.start()
