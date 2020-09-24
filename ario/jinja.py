@@ -17,8 +17,11 @@ def jinja(path):
             response.content_type = 'text/html'
             response.response_encoding = 'utf-8'
             params = func(request, response, *args)
-            body = template.render(**params)
-            body = response.encode_response(body)
+            if not self.location:
+                body = template.render(**params)
+                body = response.encode_response(body)
+            else:
+                body = params
             return body
         return handler
     return render
