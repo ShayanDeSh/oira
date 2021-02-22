@@ -36,12 +36,6 @@ class UserEndpoint(Endpoint):
         pass
 
 
-<<<<<<< HEAD
-@control.route(method=["GET", "POST", "HEAD"], route="/")
-class DashboardEndpoint(Endpoint):
-    @json
-    def get(request , response):
-=======
 @control.route(method=["GET"], route="/logout")
 class UserEndpoint(Endpoint):
     @html
@@ -58,7 +52,6 @@ class UserEndpoint(Endpoint):
 class DashboardEndpoint(Endpoint):
     @json
     def get(request, response):
->>>>>>> 1bded2e... Cookie remove fixed
         data = {
             "name": "shayan",
             "family_name": "shafaghi",
@@ -169,12 +162,6 @@ def not_found(request, response):
     response.status = forbidden()
     return body
 
-<<<<<<< HEAD
-app = Application(control)
-=======
-
-# app = Application(control)
-
 if __name__ == '__main__':
     app = Application(control)
     app = SharedDataMiddleware(app, {
@@ -182,4 +169,3 @@ if __name__ == '__main__':
     })
     print('Demo server started http://localhost:5000')
     run_simple('127.0.0.1', 5000, app, use_debugger=True, use_reloader=True)
->>>>>>> 1bded2e... Cookie remove fixed
