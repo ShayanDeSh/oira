@@ -156,19 +156,16 @@ class RouterController:
                 ret = self.routes.default(req, resp)
                 return iter([ret])
 
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> bfbc740... A bug fixed in adding node
-    def route(self, method=[], route=None, default=False):
+    def route(self, method=[], route=None):
         def wrapper(handler):
-            if default:
-                self.routes.add_default_node(handler)
-                return
             self.routes.add_node(route, method, handler)
             print(self.routes)
+        return wrapper
+
+
+    def default(self):
+        def wrapper(handler):
+            self.routes.add_default_node(handler)
         return wrapper
 
 
