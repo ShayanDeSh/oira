@@ -96,6 +96,15 @@ class RedirectEndpoint(Endpoint):
         return body
 
 
+@control.route(method=['POST'], route='/file')
+class PostFile(Endpoint):
+    def post(request, response):
+        print("here")
+        file = request.body
+        print('File: ', file)
+        return "hello"
+
+
 @control.default()
 @html
 def not_found(request, response):
