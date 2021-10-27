@@ -14,12 +14,8 @@ setup_jinja("./templates")
 
 control = RouterController(debug=True, langs=['fa', 'en'])
 
-def handler(message):
-    return b"Unauthorized error from handler"
 
-UnauthorizedError.handler = handler
-
-@control.route(method=["GET", "PUT", "INSERT"], route="/user")
+@control.route(method=["GET", "PUT", "INSERT"], route="/user/cookie")
 class UserEndpoint(Endpoint):
     @html
     def get(request, response):
@@ -32,7 +28,7 @@ class UserEndpoint(Endpoint):
         <h1>Hello World</h1>
         '''
         print(request.URI)
-        response.cookie("key", "value", {"path": "/user"})
+        response.cookie("key", "value", path='/user')
         return body
 
     @redirect("https://github.com/")
@@ -40,10 +36,29 @@ class UserEndpoint(Endpoint):
         pass
 
 
+<<<<<<< HEAD
 @control.route(method=["GET", "POST", "HEAD"], route="/")
 class DashboardEndpoint(Endpoint):
     @json
     def get(request , response):
+=======
+@control.route(method=["GET"], route="/logout")
+class UserEndpoint(Endpoint):
+    @html
+    def get(request, response):
+        body = '''
+        <title>remove cookie</title>
+        <h1>Hello World!!</h1>
+        '''
+        response.remove_cookie("key", path='/user')
+        return body
+
+
+@control.route(method=["GET", "POST", "HEAD"], route="/")
+class DashboardEndpoint(Endpoint):
+    @json
+    def get(request, response):
+>>>>>>> 1bded2e... Cookie remove fixed
         data = {
             "name": "shayan",
             "family_name": "shafaghi",
@@ -98,12 +113,12 @@ class DashboardEndpoint(Endpoint):
 
 @control.route(method=['GET', 'POST'], route="/bug")
 class bug(Endpoint):
-    def get(request, response):
+    def post(request, response):
         raise Exception("This is an exception")
         return b"302 Moved Temporarily"
 
-    def post(request, response):
-        raise UnauthorizedError
+    def get(request, response):
+        raise UnauthorizedError('abbas is here')
 
 
 @control.route(method=['GET', 'INSERT'], route="/foo")
@@ -154,4 +169,17 @@ def not_found(request, response):
     response.status = forbidden()
     return body
 
+<<<<<<< HEAD
 app = Application(control)
+=======
+
+# app = Application(control)
+
+if __name__ == '__main__':
+    app = Application(control)
+    app = SharedDataMiddleware(app, {
+        '/static': os.path.join(os.path.dirname(__file__), 'templates/static')
+    })
+    print('Demo server started http://localhost:5000')
+    run_simple('127.0.0.1', 5000, app, use_debugger=True, use_reloader=True)
+>>>>>>> 1bded2e... Cookie remove fixed
