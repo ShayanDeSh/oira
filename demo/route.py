@@ -6,10 +6,11 @@ SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.
 sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
 
 from ario import RouterController, Endpoint, Application, json, html, setup_jinja, jinja, redirect
+from ario.status import forbidden 
 
 setup_jinja("./templates")
 
-control = RouterController()
+control = RouterController(debug=True)
 
 @control.route(method=["GET", "PUT", "INSERT"], route="/user")
 class UserEndpoint(Endpoint):
@@ -42,7 +43,7 @@ class DashboardEndpoint(Endpoint):
         return data
 
 
-    def head(request , response):
+    def head(request, response):
         status = '200 OK'
         data =  b'damn'
         response_headers = [
@@ -62,6 +63,13 @@ class DashboardEndpoint(Endpoint):
         return params
 
 
+@control.route(method=['GET'], route="/bug")
+class bug(Endpoint):
+    def get(request, response):
+        raise Exception("This is an exception")
+        return b"302 Moved Temporarily"
+
+
 @control.route(method=['GET'], route="/foo")
 class RedirectEndpoint(Endpoint):
     def get(request, response):
@@ -70,14 +78,16 @@ class RedirectEndpoint(Endpoint):
 
 
 @control.route(default=True)
-def not_found(request, response): 
-    data = b'400 Not Found\n'
-    status = '404 Not Found'
-    response_headers = [
-        ('Content-type', 'text/plain'),
-        ('Content-Length', str(len(data)))
-    ]
-    response(status, response_headers)
-    return data
+@html
+def not_found(request, response):
+    body = '''
+    <title>Not Found</title>
+    <body>
+    <h1>404 Not Found</h1>
+    </body>
+    '''
+    response.status = forbidden()
+    response.start()
+    return body
 
 app = Application(control)
