@@ -162,10 +162,5 @@ def not_found(request, response):
     response.status = forbidden()
     return body
 
-if __name__ == '__main__':
-    app = Application(control)
-    app = SharedDataMiddleware(app, {
-        '/static': os.path.join(os.path.dirname(__file__), 'templates/static')
-    })
-    print('Demo server started http://localhost:5000')
-    run_simple('127.0.0.1', 5000, app, use_debugger=True, use_reloader=True)
+app = Application(control)
+
