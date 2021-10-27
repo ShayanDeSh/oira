@@ -90,7 +90,14 @@ class RouteNode:
         self.default = handler
 
 
+    def remove_redundant_slash(self, route):
+        if route[-1] == '/':
+            return route[0:-1]
+        return route
+
     def find_node(self, route):
+        route = self.remove_redundant_slash(route)
+        print(route)
         tokens = RouteNode.__tokenize_route(route)
         if route == self.path:
             return (self.handler, self.method, None)
