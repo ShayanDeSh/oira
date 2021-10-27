@@ -1,6 +1,6 @@
 import os
 import mimetypes
-from ario.exceptions import BadRequestError
+from oira.exceptions import BadRequestError
 
 SIZE = 1024 * 5
 

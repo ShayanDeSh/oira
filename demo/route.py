@@ -5,10 +5,10 @@ PACKAGE_PARENT = '..'
 SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
 sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
 
-from ario import RouterController, Endpoint, Application, json, html, setup_jinja, jinja, redirect
-from ario.status import forbidden, ok
-from ario.static import serve_static
-from ario.exceptions import UnauthorizedError
+from oira import RouterController, Endpoint, Application, json, html, setup_jinja, jinja, redirect
+from oira.status import forbidden, ok
+from oira.static import serve_static
+from oira.exceptions import UnauthorizedError
 
 setup_jinja("./templates")
 

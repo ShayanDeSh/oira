@@ -1,5 +1,5 @@
 from functools import wraps
-from ario.status import moved_temporarily, moved_permanently
+from oira.status import moved_temporarily, moved_permanently
 import ujson
 
 

@@ -1,6 +1,6 @@
 from wsgiref.headers import Headers
 from http.cookies import SimpleCookie
-from ario.status import moved_temporarily, moved_permanently
+from oira.status import moved_temporarily, moved_permanently
 from datetime import datetime, timedelta
 
 class Response(Headers):

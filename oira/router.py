@@ -1,10 +1,10 @@
 from dataclasses import dataclass
 from typing import List
-from ario.request import Request
-from ario.response import Response
-from ario.status import bad_request
+from oira.request import Request
+from oira.response import Response
+from oira.status import bad_request
 from inspect import signature
-from ario.exceptions import Error
+from oira.exceptions import Error
 import traceback
 
 
@@ -47,17 +47,17 @@ class RouteNode:
                     node = RouteNode(method, tokens[i], handler, [])
                     if tokens[i][0] == "$":
                         routes.append(node)
-                        routes = node.child
+                        routes = node.childs
                     elif tokens[i][0] == "*":
                         routes.append(node)
-                        routes = node.child
+                        routes = node.childs
                     else:
                         routes.insert(0, node)
-                        routes = node.child
+                        routes = node.childs
                 else:
                     node = RouteNode([], tokens[i], [], [])
                     routes.append(node)
-                    routes = node.child
+                    routes = node.childs
                 continue
             for (j, r) in enumerate(routes):
                 if r.path != tokens[i]:
@@ -66,17 +66,17 @@ class RouteNode:
                             node = RouteNode(method, tokens[i], handler, [])
                             if tokens[i][0] == "$":
                                 routes.append(node)
-                                routes = node.child
+                                routes = node.childs
                             elif tokens[i][0] == "*":
                                 routes.append(node)
-                                routes = node.child
+                                routes = node.childs
                             else:
                                 routes.insert(0, node)
-                                routes = node.child
+                                routes = node.childs
                         else:
                             node = RouteNode([], tokens[i], [], [])
                             routes.append(node)
-                            routes = node.child
+                            routes = node.childs
                     continue
                 if len(tokens) - 1 == i:
                     r.method = method

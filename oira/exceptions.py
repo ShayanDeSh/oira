@@ -1,4 +1,4 @@
-from ario.status import bad_request, unauthorized, forbidden, not_found
+from oira.status import bad_request, unauthorized, forbidden, not_found
 
 class Error(Exception):
     handler = None

@@ -1,7 +1,7 @@
 from http.cookies import SimpleCookie
 import ujson 
 from urllib.parse import parse_qs
-from ario.exceptions import BadRequestError
+from oira.exceptions import BadRequestError
 import wsgiref.util as wsgiutil
 import cgi
 
